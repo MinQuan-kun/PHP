@@ -9,13 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function RequireLogin(Request $request)
+    public function requireLogin(Request $request)
     {
         return view('auth.login');
-
     }
 
-    public function RequireRegister(Request $request)
+    public function requireRegister(Request $request)
     {
         return view('auth.register');
     }
@@ -29,7 +28,7 @@ class AuthController extends Controller
         
         if(Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/dashboard'); 
         }
         else
         {
@@ -55,8 +54,9 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
+
     public function logout(Request $request)
     {
         Auth::logout();
